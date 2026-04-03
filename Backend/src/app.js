@@ -14,8 +14,10 @@ app.use(express.static('public'))
 app.use(cookieParser())
 
 import tripRouter from "./routes/trip.routes.js"
+import userRouter from "./routes/user.routes.js"
 
 app.use("/api/v1/trip",tripRouter)
+app.use("/api/v1/users",userRouter)
 
 
 

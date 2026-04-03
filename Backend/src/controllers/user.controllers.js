@@ -7,30 +7,31 @@ import JWT from "jsonwebtoken"
 
 
 const generateAcessTokenAndRefreshToken = async(user) =>{
-     const token ={
+     const data ={
         id:user._id
      }
 
-     if(!token){
-        throw new ApiError(400,"ac-token is not paased")
+     if(!data){
+        throw new ApiError(400,"data is not paased")
      }
 
-    const AcessToken= JWT.sign(token,process.env.ACESS_SECERT_KEY,{expiresIn:process.env.ACESS_KEY_EXPIRY})
+    const AcessToken= JWT.sign(data,process.env.ACESS_SECERT_KEY,{expiresIn:process.env.ACESS_KEY_EXPIRY})
 
-    const rToken={
+    const rData={
         id:user._id,
         email:user.email
     }
 
-    if(!rToken){
+    if(!rData){
         throw new ApiError(400,"re-token is not passed")
     }
 
-    const refreshToken= JWT.sign(token,process.env.ACESS_SECERT_KEY,{expiresIn:process.env.ACESS_KEY_EXPIRY})
+    const refreshToken= JWT.sign(rData,process.env.ACESS_SECERT_KEY,{expiresIn:process.env.ACESS_KEY_EXPIRY})
+    
 
-    const user= await User.findById(user._id)
-    user.refreshToken =refreshToken
-    await user.save()
+    const users= await User.findById(user._id)
+    users.refreshToken =refreshToken
+    await users.save({ validateBeforeSave: false })
     return {AcessToken,refreshToken}
 
 }
@@ -48,7 +49,7 @@ const registerUser=asyncHandler(async (req,res) =>{
         throw new ApiError(400,"user email account alerady exist")
         };
 
-       const hashPassword=await bcrypt(password,10)
+       const hashPassword=await bcrypt.hash(password,10)
 
        const user= await User.create({
         email,
@@ -92,13 +93,14 @@ const loginUser=asyncHandler(async (req,res) =>{
      return res.status(202)
      .cookie("acessToken",AcessToken,option)
      .cookie("refreshToken",refreshToken,option)
-     .json(new ApiResponse(202,"user login sucessfully"))
+     .json(new ApiResponse(202,existedUser,"user login sucessfully"))
 
 })
 
 
 const logOutUser=asyncHandler(async (req,res) =>{
-
+    console.log(req.user);
+    
     await User.findByIdAndUpdate(
         req.user.id,
         {
@@ -109,15 +111,21 @@ const logOutUser=asyncHandler(async (req,res) =>{
         }
     )
 
+    const option ={
+        httpOnly:true,
+        secure:true
+      }
+
     return res.status(200)
-    .clearCookie(acessToken)
-    .clearCookie(refreshToken)
+    .clearCookie("acessToken",option)
+    .clearCookie("refreshToken",option)
     .json(new ApiResponse(200,{},"user logout sucessfully "))
 })
 
 const updateUser=asyncHandler(async (req,res) =>{
 
 })
+
 
 
 export {registerUser,

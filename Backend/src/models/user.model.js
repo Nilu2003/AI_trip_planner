@@ -20,7 +20,9 @@ const userSchema = new Schema(
         },
         Avatar:{
             type:String,
-            required:true,
+        },
+        refreshToken:{
+            type:String,
         }
 
     },
