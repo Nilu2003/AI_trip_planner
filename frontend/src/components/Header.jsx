@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-    const [isLogged, setIsLogged] = useState(true)
+    const [isLogged, setIsLogged] = useState(false)
     const [showProfile, setShowProfile] = useState(false)
 
     const handleLogout = () => {
