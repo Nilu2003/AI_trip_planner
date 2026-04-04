@@ -26,7 +26,7 @@ app.use("/api/v1/users",userRouter)
 
 
 app.use((err, req, res, next) => {
-    console.log("Error middleware triggered:", err.message)
+    // console.log("Error middleware triggered:", err.message)
 
     res.status(err.statusCode || 500).json({
         success: false,

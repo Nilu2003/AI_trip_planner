@@ -5,7 +5,7 @@ import { Trip } from "../models/trip.model.js";
 
 const createTrip = asyncHandler(async (req,res) => {
     const {days,location,people,budget}=req.body
-    console.log(req.body);
+    // console.log(req.body);
     
    
 const prompt = `
@@ -112,7 +112,7 @@ IMPORTANT:
     } catch (error) {
         throw new Error("Invalid AI JSON");
     }
-    console.log(data);
+    // console.log(data);
 
     return res.status(200).json(new ApiResponse(200,data,"response fetche sucessfully"))
     

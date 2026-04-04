@@ -14,7 +14,7 @@ export const isVerified= asyncHandler(async(req,res,next) =>{
     }
 
     const decode= JWT.verify(token,process.env.ACESS_SECERT_KEY)
-    console.log(decode);
+    // console.log(decode);
     
 
     if(!decode){
@@ -22,7 +22,7 @@ export const isVerified= asyncHandler(async(req,res,next) =>{
     }
 
     const user= await User.findById(decode.id)
-    console.log(user);
+    // console.log(user);
     
 
     req.user=user

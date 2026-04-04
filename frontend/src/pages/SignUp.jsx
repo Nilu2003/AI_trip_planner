@@ -20,7 +20,7 @@ const SignUp = () => {
     const handleSubmit= async () =>{
       try {
         const res=await API.post("/users/register", fromData)
-        console.log(res)
+        // console.log(res)
         navigate('/signin');
 
       } catch (err) {

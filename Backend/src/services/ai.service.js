@@ -23,7 +23,7 @@ export const generateTripPlan = async (prompt) => {
             }
         );
 
-        console.log("AI RAW RESPONSE:", response.data);
+        // console.log("AI RAW RESPONSE:", response.data);
 
         return response.data.choices[0].message.content;
 

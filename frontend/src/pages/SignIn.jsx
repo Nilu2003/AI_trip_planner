@@ -19,18 +19,18 @@ const SignIn = () => {
     })
   }
 
-  // ✅ handle login
+
   const handleSubmit = async () => {
     try {
       const res = await API.post("/users/login", formData)
 
-      console.log(res)
+      // console.log(res)
 
-      // ✅ store user in localStorage
+      
       localStorage.setItem("user", JSON.stringify(res.data.data))
 
       navigate('/')
-      window.location.reload() // 🔥 update header immediately
+      window.location.reload() 
 
     } catch (err) {
       setError(err?.response?.data?.message || "Login failed")
