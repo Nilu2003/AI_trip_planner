@@ -126,10 +126,20 @@ const updateUser=asyncHandler(async (req,res) =>{
 
 })
 
+const getProfile= asyncHandler(async(req,res) =>{
+    const user=await User.findById(req.user.id).select("-password -refreshToken")
+    if(!user){
+        throw new ApiError(400,"user not getting...")
+    }
+
+    return res.status(200).json(new ApiResponse(200,user,"user fetched sucessfully"))
+})
+
 
 
 export {registerUser,
     loginUser,
     logOutUser,
-    updateUser
+    updateUser,
+    getProfile
 }
