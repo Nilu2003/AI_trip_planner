@@ -31,6 +31,8 @@ const Hero = () => {
         </Link>
       </div>
 
+      <img src="./landing.png" alt="landingphoto" />
+
     </div>
   )
 }
